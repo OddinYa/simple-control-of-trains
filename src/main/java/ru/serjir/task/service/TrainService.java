@@ -47,13 +47,7 @@ public class TrainService {
         return trainList;
     }
 
-    public List<Train>checkCollision(List<Train> trainList){
-        //если один поезд едит в 1 сторону а дурой в другую
-        //если они встретились на станции в одно время
-        //надо узнавать есть ли общий путь для начала
 
-        return null;
-    }
 
 
 }

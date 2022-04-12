@@ -7,6 +7,11 @@ plugins {
 group = 'ru.serjir'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -19,6 +24,8 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'org.jgrapht', name: 'jgrapht-core', version: '1.5.1'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
