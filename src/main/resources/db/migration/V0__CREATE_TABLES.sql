@@ -1,0 +1,63 @@
+--create table hubernate_sequence (
+--        next_val bigint
+--) engine = MyISAM;
+--
+--insert into hubernate_sequence values ( 1 );
+--insert into hubernate_sequence values ( 1 );
+--
+--CREATE TABLE IF NOT EXISTS `taskdb`.`stations` (
+--   name VARCHAR(20) not null
+--) ENGINE = MyISAM;
+--alter table stations add constraint GRAPH primary key (name);
+--
+--
+--
+--CREATE TABLE IF NOT EXISTS `taskdb`.`roads` (
+--    stations1 VARCHAR(20) not null,
+--    stations2 VARCHAR(20) not null,
+--    leght INT not null
+--) ENGINE = MyISAM;
+--
+--alter table `roads` add constraint roads_stations1_fk foreign key (stations1) references stations (name);
+--alter table `roads` add constraint roads_stations2_fk foreign key (stations2) references stations (name);
+--alter table `roads` add constraint circle check (stations1 <> stations2);
+--
+--CREATE TABLE IF NOT EXISTS `taskdb`.`dijkstra`(
+--  stations VARCHAR(20) not null,
+--  leght INT not null
+--)ENGINE = MyISAM;
+--
+--alter table dijkstra add constraint dijkstra_pk primary key (stations);
+--alter table dijkstra add constraint dijkstra_FK foreign key (stations) references graph_nodes (name);
+--
+--
+--insert into stations (name) values ('А');
+--insert into stations (name) values ('Б');
+--insert into stations (name) values ('В');
+--insert into stations (name) values ('Г');
+--insert into stations (name) values ('Д');
+--
+--insert into stations (name) values ('Е');
+--insert into stations (name) values ('Ж');
+--insert into stations (name) values ('З');
+--insert into stations (name) values ('И');
+--insert into stations (name) values ('К');
+--
+--insert into roads (stations1 , stations2 , lenght) values ('А' , 'Б' , 150);
+--insert into roads (stations1 , stations2 , lenght) values ('А' , 'Д' , 240);
+--insert into roads (stations1 , stations2 , lenght) values ('Б' , 'B' , 60);
+--insert into roads (stations1 , stations2 , lenght) values ('Б' , 'Г' , 30);
+--insert into roads (stations1 , stations2 , lenght) values ('Г' , 'Д' , 40);
+--
+--insert into roads (stations1 , stations2 , lenght) values ('Д' , 'Ж' , 100);
+--insert into roads (stations1 , stations2 , lenght) values ('Ж' , 'И' , 100);
+--insert into roads (stations1 , stations2 , lenght) values ('Ж' , 'Е' , 100);
+--insert into roads (stations1 , stations2 , lenght) values ('Ж' , 'З' , 130);
+--insert into roads (stations1 , stations2 , lenght) values ('Е' , 'B' , 100);
+--
+--insert into roads (stations1 , stations2 , lenght) values ('И' , 'К' , 120);
+
+
+
+
+
