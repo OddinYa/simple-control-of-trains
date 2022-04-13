@@ -2,16 +2,20 @@ package ru.serjir.task.controller;
 
 
 import lombok.Data;
+import org.jgrapht.graph.DefaultWeightedEdge;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import ru.serjir.task.entity.Road;
 import ru.serjir.task.entity.Station;
-import ru.serjir.task.model.Train;
+
 import ru.serjir.task.repository.RoadRepo;
 import ru.serjir.task.repository.StationRepo;
 import ru.serjir.task.service.BuildGraph;
-import ru.serjir.task.service.TrainService;
+import ru.serjir.task.service.Test;
 
 
 import java.util.List;
@@ -25,6 +29,8 @@ public class Controller {
     StationRepo stationRepo;
     @Autowired
     RoadRepo roadRepo;
+    @Autowired
+    BuildGraph buildGraph;
 
 
     //  @GetMapping()
@@ -53,10 +59,10 @@ public class Controller {
     //  }toString
 
     @GetMapping("/stations")
-    public List<Station> getStations() {
+    public String getStations() {
 
-        List<Station> all = stationRepo.findAll();
-        return all;
+       return buildGraph.findTheWay().getPath(10,1)
+               .getEdgeList().toString();
     }
     @GetMapping("/roads")
     public List<Road> getRoads() {

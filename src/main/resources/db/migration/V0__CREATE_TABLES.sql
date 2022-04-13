@@ -43,21 +43,42 @@
 --insert into stations (name) values ('И');
 --insert into stations (name) values ('К');
 --
---insert into roads (stations1 , stations2 , lenght) values ('А' , 'Б' , 150);
---insert into roads (stations1 , stations2 , lenght) values ('А' , 'Д' , 240);
---insert into roads (stations1 , stations2 , lenght) values ('Б' , 'B' , 60);
---insert into roads (stations1 , stations2 , lenght) values ('Б' , 'Г' , 30);
---insert into roads (stations1 , stations2 , lenght) values ('Г' , 'Д' , 40);
+
+
+--insert into roads (lenght) values ('150');
+--insert into roads (lenght) values ('60');
+--insert into roads (lenght) values ('240');
+--insert into roads (lenght) values ('30');
+--insert into roads (lenght) values ('100');
 --
---insert into roads (stations1 , stations2 , lenght) values ('Д' , 'Ж' , 100);
---insert into roads (stations1 , stations2 , lenght) values ('Ж' , 'И' , 100);
---insert into roads (stations1 , stations2 , lenght) values ('Ж' , 'Е' , 100);
---insert into roads (stations1 , stations2 , lenght) values ('Ж' , 'З' , 130);
---insert into roads (stations1 , stations2 , lenght) values ('Е' , 'B' , 100);
+--insert into roads (lenght) values ('40');
+--insert into roads (lenght) values ('140');
+--insert into roads (lenght) values ('100');
+--insert into roads (lenght) values ('100');
+--insert into roads (lenght) values ('130');
 --
---insert into roads (stations1 , stations2 , lenght) values ('И' , 'К' , 120);
+--insert into roads (lenght) values ('120');
 
 
-
-
-
+--insert into stations_has_roads  values ('1','1');
+--insert into stations_has_roads  values ('1','2');
+--insert into stations_has_roads  values ('2','2');
+--insert into stations_has_roads  values ('2','3');
+--insert into stations_has_roads  values ('3','1');
+--insert into stations_has_roads  values ('3','5');
+--insert into stations_has_roads  values ('4','2');
+--insert into stations_has_roads  values ('4','4');
+--insert into stations_has_roads  values ('5','3');
+--insert into stations_has_roads  values ('5','6');
+--insert into stations_has_roads  values ('6','4');
+--insert into stations_has_roads  values ('6','5');
+--insert into stations_has_roads  values ('7','6');
+--insert into stations_has_roads  values ('7','7');
+--insert into stations_has_roads  values ('8','5');
+--insert into stations_has_roads  values ('8','7');
+--insert into stations_has_roads  values ('9','9');
+--insert into stations_has_roads  values ('9','7');
+--insert into stations_has_roads  values ('10','8');
+--insert into stations_has_roads  values ('10','7');
+--insert into stations_has_roads  values ('11','10');
+--insert into stations_has_roads  values ('11','9');

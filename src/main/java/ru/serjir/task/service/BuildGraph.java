@@ -2,14 +2,13 @@ package ru.serjir.task.service;
 
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+import org.jgrapht.graph.SimpleWeightedGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.serjir.task.entity.Road;
 import ru.serjir.task.entity.Station;
 import ru.serjir.task.repository.RoadRepo;
 import ru.serjir.task.repository.StationRepo;
-
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,34 +21,40 @@ public class BuildGraph implements Serializable {
     StationRepo stationRepo;
     @Autowired
     RoadRepo roadRepo;
-    @Autowired
 
 
 
-    public DijkstraShortestPath<Station, DefaultWeightedEdge> findTheWay() {
+
+    public DijkstraShortestPath<Integer, DefaultWeightedEdge> findTheWay() {
 
 
-        SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> dg = createDiGraph();
-        DijkstraShortestPath<Station, DefaultWeightedEdge> dp = new DijkstraShortestPath<>(dg);
+        SimpleWeightedGraph<Integer, DefaultWeightedEdge> dg = createDiGraph();
 
-        return dp;
+        System.out.println(dg.toString());
+
+        return new DijkstraShortestPath<>(dg);
     }
 
-    private SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> createDiGraph() {
+    private SimpleWeightedGraph<Integer, DefaultWeightedEdge> createDiGraph() {
 
-        SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> graph = new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
+        SimpleWeightedGraph<Integer, DefaultWeightedEdge> graph = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
+
         List<Station> stations = stationRepo.findAll();
+        stations.stream()
+                .map(Station::getId)
+                .forEach(graph::addVertex);
 
-        stations.forEach(graph::addVertex);
+
+
+
 
         List<Road> roads = roadRepo.findAll();
-
-
         roads.forEach(road -> {
             List<Station> stations1 = road.getStations();
-            DefaultWeightedEdge e1 = graph.addEdge(stations1.get(0), stations1.get(1));
-            graph.setEdgeWeight(e1, road.getLenght());
+            DefaultWeightedEdge e1 = graph.addEdge(stations1.get(0).getId(), stations1.get(1).getId());
+            graph.setEdgeWeight(e1, road.getLength());
         });
+
 
         return graph;}
 

@@ -15,11 +15,12 @@ public class Road {
     private Integer length;
 
     @JsonIgnoreProperties("roads")
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "stations_has_roads",
             joinColumns = @JoinColumn(name = "roads_id"),
             inverseJoinColumns = @JoinColumn(name = "stations_id"))
+
     private List<Station> stations ;
 
     public Integer getId() {
@@ -30,11 +31,11 @@ public class Road {
         this.id = id;
     }
 
-    public Integer getLenght() {
+    public Integer getLength() {
         return length;
     }
 
-    public void setLenght(Integer lenght) {
+    public void setLength(Integer lenght) {
         this.length = lenght;
     }
 
