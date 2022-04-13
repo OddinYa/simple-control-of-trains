@@ -1,10 +1,13 @@
 package ru.serjir.task.model;
 
-import org.jgrapht.graph.DefaultWeightedEdge;
+
+import lombok.Getter;
+import lombok.Setter;
 import ru.serjir.task.entity.Station;
 
 import java.util.List;
-
+@Getter
+@Setter
 public class Train {
 
     private int speed = 65;
@@ -25,54 +28,7 @@ public class Train {
 
     }
 
-    public int getSpeed() {
-        return speed;
-    }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public Station getStartStation() {
-        return startStation;
-    }
-
-    public void setStartStation(Station startStation) {
-        this.startStation = startStation;
-    }
-
-    public Station getFinishStation() {
-        return finishStation;
-    }
-
-    public void setFinishStation(Station finishStation) {
-        this.finishStation = finishStation;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Integer getIdStart() {
-        return idStart;
-    }
-
-
-    public Integer getIdFinish() {
-        return idFinish;
-    }
-
-    public List<String> getRailways() {
-        return railways;
-    }
-
-    public void setRailways(List<String> railways) {
-        this.railways = railways;
-    }
 
 }
 

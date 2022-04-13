@@ -2,7 +2,6 @@ package ru.serjir.task.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.serjir.task.entity.Road;
 import ru.serjir.task.exception.StationNotFoundException;
 import ru.serjir.task.exception.TrainCollisionException;
 import ru.serjir.task.model.Train;

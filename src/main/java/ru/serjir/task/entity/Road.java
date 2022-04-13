@@ -1,10 +1,13 @@
 package ru.serjir.task.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "roads")
 public class Road {
@@ -23,28 +26,6 @@ public class Road {
 
     private List<Station> stations ;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer lenght) {
-        this.length = lenght;
-    }
-
-  public List<Station> getStations() {
-      return stations;
-  }
-
-  public void setStations(List<Station> stations) {
-      this.stations = stations;
-   }
 }
 
