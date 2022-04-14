@@ -28,14 +28,13 @@ public class BuildGraph implements Serializable {
     public DijkstraShortestPath<Integer, DefaultWeightedEdge> findTheWay() {
 
 
-        SimpleWeightedGraph<Integer, DefaultWeightedEdge> dg = createDiGraph();
+        SimpleWeightedGraph<Integer, DefaultWeightedEdge> dg = createGraph();
 
-        System.out.println(dg.toString());
 
         return new DijkstraShortestPath<>(dg);
     }
 
-    private SimpleWeightedGraph<Integer, DefaultWeightedEdge> createDiGraph() {
+    private SimpleWeightedGraph<Integer, DefaultWeightedEdge> createGraph() {
 
         SimpleWeightedGraph<Integer, DefaultWeightedEdge> graph = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
 
@@ -43,8 +42,6 @@ public class BuildGraph implements Serializable {
         stations.stream()
                 .map(Station::getId)
                 .forEach(graph::addVertex);
-
-
 
 
 
