@@ -17,8 +17,6 @@ public class Train {
     private Integer idFinish;
     private String message = "Маршрут завершен";
 
-
-
     private List<DefaultWeightedEdge>railways = null;
 
 //Test

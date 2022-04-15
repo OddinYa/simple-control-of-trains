@@ -1,6 +1,8 @@
 package ru.serjir.task.service;
 
 import org.graalvm.compiler.graph.Graph;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultWeightedEdge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.serjir.task.model.Train;
@@ -23,17 +25,19 @@ public class TrainService {
     public List<Train> checkCollision(BuildGraph graph) {
         //Test trains;
         Train train1 = new Train(1, 4);
-        Train train2 = new Train(5, 7);
-        Train train3 = new Train(9, 7);
-        Train train4 = new Train(6, 4);
+        Train train2 = new Train(2, 7);
+        Train train3 = new Train(9, 6);
+        Train train4 = new Train(5, 8);
+        Train train5 = new Train(2, 8);
 
-        List<Train> trainList = new ArrayList<>();
+        List<Train> trainList = new ArrayList<>();  // сюда идет репа
         trainList.add(train1);
         trainList.add(train2);
         trainList.add(train3);
         trainList.add(train4);
+        trainList.add(train5);
         //Test
-
+        List<Train> reternList = new ArrayList<>();
         List<Train> verified = new ArrayList<>();
         List<Train> notVerified = new ArrayList<>();
 
@@ -53,6 +57,7 @@ public class TrainService {
                     notVerified.add(trainList.get(j));
                     trainList.get(j).setMessage("Столкновение");
 
+
                 } else if (finish && weight) {
                     notVerified.add(trainList.get(i));
                     trainList.get(i).setMessage("Столкновение");
@@ -69,25 +74,45 @@ public class TrainService {
 
 
             }if(trainList.get(i).getMessage().equals("Маршрут завершен")){
-                trainList.get(i).setRailways(graph.findTheWay()
-                        .getPath(trainList.get(i).getIdStart(),
-                                trainList.get(i).getIdFinish()).getEdgeList());
                 verified.add(trainList.get(i));
             }
 
         }
-        return checkMiddleCollision(verified);
+        reternList.addAll(checkMiddleCollision(verified,graph));
+        reternList.addAll(notVerified);
+        return reternList;
     }
 
-    private List<Train> checkMiddleCollision(List<Train> verified){
+    private List<Train> checkMiddleCollision(List<Train> verified,BuildGraph graph){
 
-        for (int i = 1; i < verified.size()-1; i++) {
-            for (int j = 2; j < verified.size()-1; j++) {
+        for (int i = 0; i < verified.size(); i++) {
+            for (int j = 1; j < verified.size(); j++) {
 
+                Integer stationI = graph.findTheWay()
+                        .getPath(verified.get(i).getIdStart(),verified.get(i).getIdFinish())
+                        .getVertexList()
+                        .get(i);
+                Integer stationJ = graph.findTheWay()
+                        .getPath(verified.get(j).getIdStart(),verified.get(j).getIdFinish())
+                        .getVertexList()
+                        .get(j);
+
+
+
+                if(stationI.equals(stationJ)){
+                    boolean weight = (int) graph.findTheWay()
+                            .getPath(verified.get(i).getIdStart(), stationI).getWeight()
+                            == (int) graph.findTheWay().
+                            getPath(verified.get(j).getIdStart(), stationJ).getWeight();
+                    if(weight){
+                        verified.get(i).setMessage("Столкновение");
+                        verified.get(j).setMessage("Столкновение");
+                    }
+                }
             }
 
         }
-
+        return verified;
     }
 
 
