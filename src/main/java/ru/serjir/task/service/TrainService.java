@@ -1,13 +1,10 @@
 package ru.serjir.task.service;
 
-import org.graalvm.compiler.graph.Graph;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultWeightedEdge;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.serjir.task.model.Train;
-import ru.serjir.task.repository.RoadRepo;
-import ru.serjir.task.repository.StationRepo;
+import ru.serjir.task.entity.Train;
+import ru.serjir.task.repository.TrainRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,103 +13,147 @@ import java.util.List;
 @Service
 public class TrainService {
 
+
     @Autowired
-    StationRepo stationRepo;
+    BuildGraph graph;
     @Autowired
-    RoadRepo RoadRepo;
+    TrainRepo trainRepo;
 
 
-    public List<Train> checkCollision(BuildGraph graph) {
-        //Test trains;
-        Train train1 = new Train(1, 4);
-        Train train2 = new Train(2, 7);
-        Train train3 = new Train(9, 6);
-        Train train4 = new Train(5, 8);
-        Train train5 = new Train(2, 8);
+    public List<Train> checkCollision() {
 
-        List<Train> trainList = new ArrayList<>();  // сюда идет репа
-        trainList.add(train1);
-        trainList.add(train2);
-        trainList.add(train3);
-        trainList.add(train4);
-        trainList.add(train5);
-        //Test
+        Train trainI;
+        Train trainJ;
+
+        List<Train> trainList = trainRepo.findAll();  // сюда идет репа
         List<Train> reternList = new ArrayList<>();
         List<Train> verified = new ArrayList<>();
         List<Train> notVerified = new ArrayList<>();
+        if(trainList.size()==1){
+            return trainList;
+        }
 
         for (int i = 0; i < trainList.size(); i++) {
+
+            trainI = trainList.get(i);
+
             for (int j = i + 1; j < trainList.size(); j++) {
-                boolean weight = (int) graph.findTheWay()
-                        .getPath(trainList.get(i).getIdStart(), trainList.get(i).getIdFinish()).getWeight()
-                        == (int) graph.findTheWay().
-                        getPath(trainList.get(j).getIdStart(), trainList.get(j).getIdFinish()).getWeight();
 
-                boolean start = trainList.get(i).getIdStart().equals(trainList.get(j).getIdStart());
-                boolean finish = trainList.get(j).getIdFinish().equals(trainList.get(i).getIdFinish());
+                trainJ = trainList.get(j);
 
-                if (start) {
-                    notVerified.add(trainList.get(i));
-                    trainList.get(i).setMessage("Столкновение");
-                    notVerified.add(trainList.get(j));
-                    trainList.get(j).setMessage("Столкновение");
+                if (checkStart(trainList, i, j)) {
+                    notVerified.add(trainI);
+                    trainI.setInfo("Столкновение");
+                    notVerified.add(trainJ);
+                    trainJ.setInfo("Столкновение");
+                } else if (checkFinish(trainList, i, j)) {
 
-
-                } else if (finish && weight) {
-                    notVerified.add(trainList.get(i));
-                    trainList.get(i).setMessage("Столкновение");
-                    notVerified.add(trainList.get(j));
-                    trainList.get(j).setMessage("Столкновение");
+                    if (checkWeight(trainList, i, j)) {
+                        notVerified.add(trainI);
+                        trainI.setInfo("Столкновение");
+                        notVerified.add(trainJ);
+                        trainJ.setInfo("Столкновение");
+                    }
+                } else if (checkCross(trainList, i, j)) {
+                    notVerified.add(trainI);
+                    trainI.setInfo("Столкновение");
+                    notVerified.add(trainJ);
+                    trainJ.setInfo("Столкновение");
                 }
-                else if(trainList.get(i).getIdStart().equals(trainList.get(j).getIdFinish())
-                        && weight) {
-                    notVerified.add(trainList.get(i));
-                    trainList.get(i).setMessage("Столкновение");
-                    notVerified.add(trainList.get(j));
-                    trainList.get(j).setMessage("Столкновение");
-                }
-
-
-            }if(trainList.get(i).getMessage().equals("Маршрут завершен")){
-                verified.add(trainList.get(i));
+            }
+            if (trainI.getInfo().equals("")) {
+               // trainI.setStations((graph.findTheWay()
+               //         .getPath(trainI.getStationStart().getId(), trainI.getStationFinish().getId())
+               //         .getVertexList()));
+                verified.add(trainI);
             }
 
         }
-        reternList.addAll(checkMiddleCollision(verified,graph));
+        reternList.addAll(checkMiddleCollision(verified, graph));
         reternList.addAll(notVerified);
         return reternList;
     }
 
-    private List<Train> checkMiddleCollision(List<Train> verified,BuildGraph graph){
+    private List<Train> checkMiddleCollision(List<Train> verified, BuildGraph graph) {
+
+        Integer stationI;
+        Integer stationJ;
+
+        Integer stationIStart;
+        Integer stationJStart;
+        Integer stationIFinish;
+        Integer stationJFinish;
 
         for (int i = 0; i < verified.size(); i++) {
-            for (int j = 1; j < verified.size(); j++) {
+            for (int j = i + 1; j < verified.size(); j++) {
 
-                Integer stationI = graph.findTheWay()
-                        .getPath(verified.get(i).getIdStart(),verified.get(i).getIdFinish())
+                stationIStart = verified.get(i).getStationStart().getId();
+                stationIFinish = verified.get(i).getStationFinish().getId();
+                stationJStart = verified.get(j).getStationStart().getId();
+                stationJFinish = verified.get(j).getStationFinish().getId();
+
+                stationI = graph.findTheWay()
+                        .getPath(stationIStart, stationIFinish)
                         .getVertexList()
                         .get(i);
-                Integer stationJ = graph.findTheWay()
-                        .getPath(verified.get(j).getIdStart(),verified.get(j).getIdFinish())
+                stationJ = graph.findTheWay()
+                        .getPath(stationJStart, stationJFinish)
                         .getVertexList()
                         .get(j);
 
 
-
-                if(stationI.equals(stationJ)){
-                    boolean weight = (int) graph.findTheWay()
-                            .getPath(verified.get(i).getIdStart(), stationI).getWeight()
-                            == (int) graph.findTheWay().
-                            getPath(verified.get(j).getIdStart(), stationJ).getWeight();
-                    if(weight){
-                        verified.get(i).setMessage("Столкновение");
-                        verified.get(j).setMessage("Столкновение");
+                if (stationI.equals(stationJ)) {
+                    boolean weight = checkWeight(verified,i,j);
+                    if (weight) {
+                        verified.get(i).setInfo("Столкновение");
+                        verified.get(j).setInfo("Столкновение");
                     }
                 }
             }
 
         }
         return verified;
+    }
+
+    private boolean checkWeight(List<Train> trainList, int i, int j) {
+        Train trainI = trainList.get(i);
+        Train trainJ = trainList.get(j);
+
+        Integer stationIStart = trainI.getStationStart().getId();
+        Integer stationJStart = trainJ.getStationStart().getId();
+        Integer stationIFinish = trainI.getStationFinish().getId();
+        Integer stationJFinish = trainJ.getStationFinish().getId();
+
+        boolean weight = (int) graph.findTheWay()
+                .getPath(stationIStart, stationIFinish).getWeight()
+                == (int) graph.findTheWay().
+                getPath(stationJStart, stationJFinish).getWeight();
+
+        return weight;
+    }
+
+    private boolean checkStart(List<Train> trainList, int i, int j) {
+        Train trainI = trainList.get(i);
+        Train trainJ = trainList.get(j);
+
+        boolean start = trainI.getStationStart().equals(trainJ.getStationStart());
+        return start;
+    }
+
+    private boolean checkFinish(List<Train> trainList, int i, int j) {
+        Train trainI = trainList.get(i);
+        Train trainJ = trainList.get(j);
+
+        boolean finish = trainI.getStationFinish().equals(trainJ.getStationFinish());
+        return finish;
+    }
+
+    private boolean checkCross(List<Train> trainList, int i, int j) {
+        Train trainI = trainList.get(i);
+        Train trainJ = trainList.get(j);
+
+        boolean cross = trainI.getStationStart().equals(trainJ.getStationFinish());
+        return cross;
     }
 
 

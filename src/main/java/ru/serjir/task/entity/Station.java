@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 @Getter
 @Setter
 @Entity
@@ -25,5 +23,8 @@ public class Station {
     @JsonIgnoreProperties("stations")
     @ManyToMany(mappedBy = "stations")
     private List<Road> roads ;
+
+
+
 
 }
