@@ -1,8 +1,7 @@
 package ru.serjir.task.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "roads")
+@EqualsAndHashCode
+@AllArgsConstructor
 public class Road {
 
     @Id
@@ -27,5 +28,7 @@ public class Road {
     private List<Station> stations ;
 
 
+    public Road() {
+    }
 }
 

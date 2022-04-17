@@ -22,9 +22,6 @@ public class BuildGraph implements Serializable {
     @Autowired
     RoadRepo roadRepo;
 
-
-
-
     public DijkstraShortestPath<Integer, DefaultWeightedEdge> findTheWay() {
 
 

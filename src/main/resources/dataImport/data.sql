@@ -49,3 +49,6 @@ insert into stations_has_roads  values ('10','8');
 insert into stations_has_roads  values ('10','7');
 insert into stations_has_roads  values ('11','10');
 insert into stations_has_roads  values ('11','9');
+
+insert into train(station_start,station_finish) values ('1','4');
+insert into train(station_start,station_finish) values ('5','2');

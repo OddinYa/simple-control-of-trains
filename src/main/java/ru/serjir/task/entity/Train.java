@@ -2,19 +2,20 @@ package ru.serjir.task.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
-//@Builder
+import java.util.Objects;
+
+@Builder
 @Getter
 @Setter
 @Entity
 @Table(name = "Train")
-@NoArgsConstructor
+@EqualsAndHashCode
+@AllArgsConstructor
+@ToString
 public class Train {
 
     @Id
@@ -25,16 +26,21 @@ public class Train {
     @JsonIgnoreProperties("roads")
     @OneToOne
     @JoinColumn(name = "stationStart")
-  private Station stationStart;
+    private Station stationStart;
 
     @JsonIgnoreProperties("roads")
     @OneToOne
     @JoinColumn(name = "stationFinish")
-  private Station stationFinish;
+    private Station stationFinish;
 
     private String info;
 
-    //private List<Integer> Stations;
+    public Train() {
+
+    }
+
+
+
 }
 
 

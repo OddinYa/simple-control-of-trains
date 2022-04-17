@@ -26,6 +26,7 @@ public class TrainService {
         Train trainJ;
 
         List<Train> trainList = trainRepo.findAll();  // сюда идет репа
+
         List<Train> reternList = new ArrayList<>();
         List<Train> verified = new ArrayList<>();
         List<Train> notVerified = new ArrayList<>();
@@ -61,12 +62,12 @@ public class TrainService {
                     trainJ.setInfo("Столкновение");
                 }
             }
-            if (trainI.getInfo().equals("")) {
-               // trainI.setStations((graph.findTheWay()
-               //         .getPath(trainI.getStationStart().getId(), trainI.getStationFinish().getId())
-               //         .getVertexList()));
+            if (trainI.getInfo() == null )
+                trainI.setInfo("");
+
+            if(trainI.getInfo().isEmpty())
                 verified.add(trainI);
-            }
+
 
         }
         reternList.addAll(checkMiddleCollision(verified, graph));
@@ -85,7 +86,7 @@ public class TrainService {
         Integer stationJFinish;
 
         for (int i = 0; i < verified.size(); i++) {
-            for (int j = i + 1; j < verified.size(); j++) {
+            for (int j = i+1 ; j < verified.size(); j++) {
 
                 stationIStart = verified.get(i).getStationStart().getId();
                 stationIFinish = verified.get(i).getStationFinish().getId();
@@ -95,7 +96,7 @@ public class TrainService {
                 stationI = graph.findTheWay()
                         .getPath(stationIStart, stationIFinish)
                         .getVertexList()
-                        .get(i);
+                        .get(j);
                 stationJ = graph.findTheWay()
                         .getPath(stationJStart, stationJFinish)
                         .getVertexList()
@@ -103,7 +104,7 @@ public class TrainService {
 
 
                 if (stationI.equals(stationJ)) {
-                    boolean weight = checkWeight(verified,i,j);
+                    boolean weight = checkWeight(verified,j,j);
                     if (weight) {
                         verified.get(i).setInfo("Столкновение");
                         verified.get(j).setInfo("Столкновение");
