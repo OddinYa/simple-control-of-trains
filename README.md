@@ -11,3 +11,5 @@ Project is created with:
 * Java
 * Spring Boot
 * MySql-database
+* lombok
+* Mokito
