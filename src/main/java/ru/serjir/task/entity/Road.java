@@ -2,9 +2,9 @@ package ru.serjir.task.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
+
 @Getter
 @Setter
 @Entity
