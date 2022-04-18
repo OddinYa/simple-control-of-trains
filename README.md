@@ -13,3 +13,4 @@ Project is created with:
 * MySql-database
 * lombok
 * Mokito
+* JGraphT
