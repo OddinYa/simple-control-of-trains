@@ -3,10 +3,8 @@ package ru.serjir.task.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Builder
 @Getter
@@ -15,6 +13,7 @@ import java.util.Objects;
 @Table(name = "Train")
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Train {
 
@@ -32,13 +31,8 @@ public class Train {
     @OneToOne
     @JoinColumn(name = "stationFinish")
     private Station stationFinish;
-
+    @Transient
     private String info;
-
-    public Train() {
-
-    }
-
 
 
 }

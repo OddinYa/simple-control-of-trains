@@ -62,10 +62,7 @@ public class TrainService {
                     trainJ.setInfo("Столкновение");
                 }
             }
-            if (trainI.getInfo() == null )
-                trainI.setInfo("");
-
-            if(trainI.getInfo().isEmpty())
+            if(trainI.getInfo()==null)
                 verified.add(trainI);
 
 

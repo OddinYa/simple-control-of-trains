@@ -11,6 +11,7 @@ import java.util.List;
 @Table(name = "roads")
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 public class Road {
 
     @Id
@@ -28,7 +29,5 @@ public class Road {
     private List<Station> stations ;
 
 
-    public Road() {
-    }
 }
 

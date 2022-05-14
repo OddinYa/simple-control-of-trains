@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "stations")
 @EqualsAndHashCode
+@NoArgsConstructor
 @AllArgsConstructor
 public class Station {
 
@@ -25,9 +26,6 @@ public class Station {
     @JsonIgnoreProperties("stations")
     @ManyToMany(mappedBy = "stations")
     private List<Road> roads;
-
-    public Station() {
-    }
 
 
 }

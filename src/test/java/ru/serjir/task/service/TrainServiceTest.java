@@ -262,12 +262,12 @@ class TrainServiceTest {
         Station station = Station.builder().id(1).name("A").build();
         Station station2 = Station.builder().id(2).name("B").build();
 
-        Train train = Train.builder().id(1).stationStart(station).stationFinish(station2).info("").build();
+        Train train = Train.builder().id(1).stationStart(station).stationFinish(station2).build();
 
         Station station3 = Station.builder().id(5).name("D").build();
         Station station4 = Station.builder().id(3).name("C").build();
 
-        Train train2 = Train.builder().id(2).stationStart(station3).stationFinish(station4).info("").build();
+        Train train2 = Train.builder().id(2).stationStart(station3).stationFinish(station4).build();
 
         trains.add(train);
         trains.add(train2);
