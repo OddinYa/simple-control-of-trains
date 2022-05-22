@@ -15,7 +15,7 @@ Project is created with:
 * Mokito
 * JGraphT
 
-#Technical assignment
+# Technical assignment
 
 Тестовое задание Java – *****
 1. Есть набор ж/д станций, какие-то соединены между собой ж/д путями (одноколейкой).
